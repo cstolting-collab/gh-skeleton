@@ -15,7 +15,7 @@ trap cleanup EXIT
 mock_bin="${temporary_directory}/bin"
 mkdir -p "${mock_bin}"
 
-cat > "${mock_bin}/gh" <<'EOF'
+cat > "${mock_bin}/gh" << 'EOF'
 #!/usr/bin/env bash
 set -o errexit
 set -o nounset
@@ -28,7 +28,7 @@ elif [[ " $* " == *" --input - "* ]]; then
 fi
 EOF
 
-cat > "${mock_bin}/git" <<'EOF'
+cat > "${mock_bin}/git" << 'EOF'
 #!/usr/bin/env bash
 set -o errexit
 set -o nounset
