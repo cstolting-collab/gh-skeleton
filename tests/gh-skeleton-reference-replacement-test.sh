@@ -37,10 +37,10 @@ set -o pipefail
 if [[ "${1:-}" == "clone" ]]; then
   destination="${!#}"
   mkdir -p "${destination}/.github/workflows" "${destination}/meta"
-  printf '%s\n' 'cisagov/skeleton-parent skeleton-parent' > "${destination}/README.md"
-  printf '%s\n' 'cisagov/skeleton-parent skeleton-parent' > "${destination}/CONTRIBUTING.md"
-  printf '%s\n' 'cisagov/skeleton-parent skeleton-parent' > "${destination}/.github/workflows/build.yml"
-  printf '%s\n' 'cisagov/skeleton-parent skeleton-parent' > "${destination}/meta/requirements.yml"
+  printf '%s\n' 'cisagov/foo.bar foo.bar fooXbar' > "${destination}/README.md"
+  printf '%s\n' 'cisagov/foo.bar foo.bar fooXbar' > "${destination}/CONTRIBUTING.md"
+  printf '%s\n' 'cisagov/foo.bar foo.bar fooXbar' > "${destination}/.github/workflows/build.yml"
+  printf '%s\n' 'cisagov/foo.bar foo.bar fooXbar' > "${destination}/meta/requirements.yml"
 fi
 EOF
 
@@ -48,7 +48,7 @@ chmod +x "${mock_bin}/gh" "${mock_bin}/git"
 
 (
   cd "${temporary_directory}"
-  PATH="${mock_bin}:${PATH}" bash "${repo_root}/gh-skeleton" clone skeleton-parent child-repo
+  PATH="${mock_bin}:${PATH}" bash "${repo_root}/gh-skeleton" clone foo.bar child-repo
 )
 
 child_repository="${temporary_directory}/child-repo"
@@ -63,9 +63,9 @@ assert_contains() {
   fi
 }
 
-assert_contains 'cisagov/child-repo child-repo' "${child_repository}/README.md"
-assert_contains 'cisagov/child-repo child-repo' "${child_repository}/CONTRIBUTING.md"
-assert_contains 'cisagov/child-repo child-repo' "${child_repository}/.github/workflows/build.yml"
-assert_contains 'cisagov/skeleton-parent skeleton-parent' "${child_repository}/meta/requirements.yml"
+assert_contains 'cisagov/child-repo child-repo fooXbar' "${child_repository}/README.md"
+assert_contains 'cisagov/child-repo child-repo fooXbar' "${child_repository}/CONTRIBUTING.md"
+assert_contains 'cisagov/child-repo child-repo fooXbar' "${child_repository}/.github/workflows/build.yml"
+assert_contains 'cisagov/foo.bar foo.bar fooXbar' "${child_repository}/meta/requirements.yml"
 
 echo "PASS: repository references are only replaced in project metadata."
