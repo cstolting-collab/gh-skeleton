@@ -125,8 +125,8 @@ clone_repo() {
   for reference_file in README.md CONTRIBUTING.md; do
     if [ -f "${reference_file}" ]; then
       perl -pi \
-        -e "s/${src_org}\/${src_repo}/${dest_org}\/${dest_repo}/g;" \
-        -e "s/${src_repo}/${dest_repo}/g" \
+        -e "s/\Q${src_org}\/${src_repo}\E/${dest_org}\/${dest_repo}/g;" \
+        -e "s/\Q${src_repo}\E/${dest_repo}/g" \
         "${reference_file}"
     fi
   done
@@ -134,8 +134,8 @@ clone_repo() {
   if [ -d .github ]; then
     find .github -type f \
       -exec perl -pi \
-      -e "s/${src_org}\/${src_repo}/${dest_org}\/${dest_repo}/g;" \
-      -e "s/${src_repo}/${dest_repo}/g" {} +
+      -e "s/\Q${src_org}\/${src_repo}\E/${dest_org}\/${dest_repo}/g;" \
+      -e "s/\Q${src_repo}\E/${dest_repo}/g" {} +
   fi
 
   log_info "Checking for bump-version script."
